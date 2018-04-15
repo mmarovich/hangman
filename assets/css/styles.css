@@ -33,11 +33,12 @@ html,body {
 }
 
 #info-container {
-    display: inline-block;
     height: 400px;
     width: 50%;
     vertical-align: top;
     font-size: 20px;
+    margin: auto;
+    text-align: center;
 }
 
 #hangman {

@@ -1,6 +1,7 @@
 var wordArray = [];
+var renderWordArray = [];
 var guessedArray = [];
-var renderArray = [];
+var renderGuessedArray = [];
 var randomWord;
 var guessesLeft = 6;
 var winsCounter = 0;
@@ -24,12 +25,12 @@ function displayBlanks() {
     for (var i = 0; i < randomWord.length; i++) {
         if (randomWord[i] !== " ") {
             wordArray.push("_");
-            renderArray.push("<span class='animated " + randomWord[i] + "'>_</span>");
+            renderWordArray.push("<span class='animated " + randomWord[i] + "'>_</span>");
         } else {
             wordArray.push("&nbsp;")
         }
     }
-    renderEverything();
+    renderEverything().then(animateGuessContainerIn());
 }
 
 // Evaluates whether the user has guessed the letter before,
@@ -43,7 +44,10 @@ function evaluate(guess) {
     }
     if (inWord && !alreadyGuessed) {
         guessedArray.push(guess);
+        renderGuessedArray.push("<span id='"+ guess + "' class='animated'>" + guess + "</span>");
+        console.log(renderGuessedArray);
         renderLetter(guess);
+        renderGuessed(guess);
         if (wordArray.indexOf("_") === -1) {
             winsCounter++;
             console.log("You win!");
@@ -58,10 +62,12 @@ function evaluate(guess) {
         if (guessesLeft === 0) {
             lossesCounter++;
             console.log("you die.");
-            // renderEverythingOut();
-            startGame();
+            renderEverythingOut().then(startGame());
         } else {
             guessedArray.push(guess);
+            renderGuessedArray.push("<span id="+ guess + " class='animated'>" + guess + "</span>")
+            renderLetter(guess);
+            renderGuessed(guess);
             // renderEverything(guess);
         }
     }
@@ -83,16 +89,6 @@ function guessedBefore(guess) {
     } else {
         alreadyGuessed = true;
     }
-}
-
-// renders all variables on the page.
-function renderEverything(letter) {
-
-    document.getElementById("letters-guessed").innerHTML = `You've guessed: ${guessedArray.join(", ")}`;
-    document.getElementById("guesses-left").innerHTML = `You die in ${guessesLeft} guesses`;
-    animateGuessContainerIn();
-    document.getElementById("wins-counter").innerHTML = winsCounter === 1 ? `You've won 1 time!` : `You've won ${winsCounter} times!`;
-    document.getElementById("losses-counter").innerHTML = lossesCounter === 1 ? `You've lost 1 time!` : `You've lost ${lossesCounter} times!`;
 }
 
 function startGame() {

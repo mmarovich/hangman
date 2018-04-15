@@ -3,26 +3,45 @@
     elements on the page. 
 */
 
+var hangmanContainer = document.getElementById("hangman-container");
+var guessContainer = document.getElementById("guess-container");
+var lettersGuessed = document.getElementById("letters-guessed");
+
+// renders all variables on the page.
+function renderEverything(letter) {
+    return new Promise(function () {
+        fadeInHangman();
+        document.getElementById("letters-guessed").innerHTML = `You've guessed: ${renderGuessedArray.join(" ")}`;
+        document.getElementById("guesses-left").innerHTML = `You die in ${guessesLeft} guesses`;
+        document.getElementById("wins-counter").innerHTML = winsCounter === 1 ? `You've won 1 time!` : `You've won ${winsCounter} times!`;
+        document.getElementById("losses-counter").innerHTML = lossesCounter === 1 ? `You've lost 1 time!` : `You've lost ${lossesCounter} times!`;
+    })
+
+}
+
+function fadeInHangman() {
+    return new Promise(function () {
+        hangmanContainer.classList.remove("fadeOut");
+        hangmanContainer.classList.add("fadeInUpBig");
+    })
+}
+
 function animateGuessContainerIn() {
-    guessContainer = document.getElementById("guess-container")
-    guessContainer.innerHTML = renderArray.join(" ");
-
-    for (var i = 0; i < 1; i++) {
-
-        if (guessContainer.classList.contains('slideInLeft')) {
-            guessContainer.classList.remove('slideInLeft');
-            // alert("remove faq display!");
-        } else {
+    return new Promise(function () {
+        setTimeout(function () {
+            guessContainer.innerHTML = renderWordArray.join(" ");
             guessContainer.classList.add('slideInLeft');
-            // alert("add faq display!");
-        }
+        }, 1000)
+    })
+}
 
-    };
+function renderEverythingOut() {
+    hangmanContainer.classList.remove('slideInLeft')
+    hangmanContainer.classList.add('fadeOut');
 }
 
 function renderLetter(guess) {
     var letter = document.getElementsByClassName(guess);
-    console.log(letter)
 
     for (var i = 0; i < randomWord.length; i++) {
         if (guess === randomWord[i]) {
@@ -34,4 +53,12 @@ function renderLetter(guess) {
         letter[i].innerHTML = guess;
         letter[i].classList.add('bounceInDown')
     }
+}
+
+function renderGuessed(guess) {
+    lettersGuessed.innerHTML = `You've guessed: ${renderGuessedArray.join(" | ")}`;
+    var letter = document.getElementById(guess)
+    console.log(letter)
+
+    letter.classList.add('fadeInRightBig');
 }
