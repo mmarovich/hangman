@@ -7,6 +7,8 @@ html,body {
     height: 100%;
     margin:0;
     padding:0;
+    background-color: rgba(165,214,167 ,1);
+    font-family: 'Mali', cursive;
 }
 
 #container {
@@ -15,15 +17,24 @@ html,body {
 }
 
 #title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 150px;
     margin: 0;
-    background-color: green;
+    background-color: black;
+}
+
+#title-container h1 {
+    flex: 1;
+    text-align: center;
+    color: rgba(165,214,167 ,1);
 }
 
 #guess-container {
     width: 100%;
-    height: 75px;
+    height: 150px;
     text-align: center;
     font-size: 40px;
 }
@@ -33,12 +44,17 @@ html,body {
 }
 
 #info-container {
-    height: 400px;
+    height: 200px;
     width: 50%;
     vertical-align: top;
     font-size: 20px;
     margin: auto;
     text-align: center;
+}
+
+#hint {
+    width: 75%;
+    margin: auto;
 }
 
 #hangman {
@@ -54,4 +70,19 @@ html,body {
 /* Spans can't be animated without a display property, unfortunately */
 span {
     display: inline-block;
+}
+
+@media only screen and (max-width: 480px) {
+    #info-container {
+        width: 100%;;
+    }
+
+    #hint {
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    #hangman {
+        width: 100%;
+    }
 }
